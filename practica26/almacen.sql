@@ -9,7 +9,7 @@ CREATE TABLE tipos_pieza (
     cif CHAR(9) CONSTRAINT sum_cif_fk REFERENCES empresas,
     precio_compra NUMBER(11,4)
       CONSTRAINT sum_pre_nn NOT NULL
-      CONSTRAINT sum_pre_ck CHECK,
+      CONSTRAINT sum_pre_ck CHECK(suministros.precio_compra>0),
     CONSTRAINT suministros_pk PRIMARY KEY (tipo,modelo,cif),
     CONSTRAINT suministros_fk1 FOREIGN KEY (tipo,modelo) REFERENCES piezas
   );
@@ -45,7 +45,11 @@ CREATE TABLE existencias (
   tipo CHAR(2),
   modelo NUMBER(2),
   n_almacen NUMBER(2) CONSTRAINT exi_num_fk REFERENCES almacenes,
-    CONSTRAINT existencias_pk PRIMARY KEY (tipo,modelo,n_almacen)
+  cantidad NUMBER(9)
+    CONSTRAINT exi_can_ck CHECK (cantidad>0)
+    CONSTRAINT exi_can_nn NOT NULL,
+    CONSTRAINT existencias_pk PRIMARY KEY (tipo,modelo,n_almacen),
+    CONSTRAINT existencia_fk FOREIGN KEY (tipo,modelo) REFERENCES piezas
 );
 
 CREATE TABLE almacenes (
