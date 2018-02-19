@@ -11,7 +11,7 @@ CREATE TABLE equipos (
 
 CREATE TABLE jugadores (
   id_jugador NUMBER(3) CONSTRAINT jugadores_pk PRIMARY KEY,
-  nombre VARCHAR(50) CONSTRAINT jugadorews_nn NOT NULL,
+  nombre VARCHAR(50) CONSTRAINT jugadores_nn NOT NULL,
   fecha_nac DATE,
   id_equipo NUMBER(2) CONSTRAINT jugadores_fk REFERENCES equipos ON DELETE SET NULL
 );
@@ -36,3 +36,11 @@ CREATE TABLE goles(
   CONSTRAINT goles_pk PRIMARY KEY (id_equipo_fuera, id_equipo_casa, minuto),
   CONSTRAINT goles_fk1 FOREIGN KEY (id_equipo_casa, id_equipo_fuera) REFERENCES partidos ON DELETE CASCADE
  );
+
+ALTER TABLE equipos MODIFY aforo CONSTRAINT equipos_nn3 NOT NULL;
+
+ALTER TABLE equipos MODIFY estadio CONSTRAINT equipos_nn4 NOT NULL;
+
+ALTER TABLE equipos MODIFY ano_fundacion DATE;
+
+ALTER TABLE jugadores DROP CONSTRAINT jugadores_nn;
